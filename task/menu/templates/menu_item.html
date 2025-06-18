@@ -1,11 +1,15 @@
 <ul>
 {% for item in items %}
     <li>
-        <a href="{% if item.name_url %}{% url item.name_url %}{% else %}{{ item.url }}{% endif %}">
+        <a href="{% if item.name_url %}{% url item.name_url %}{% else %}{{ item.url }}{% endif %}"
+           {% if item.active %}style="font-weight: bold; color: blue;"{% endif %}>
             {{ item.title }}
         </a>
+
         {% if item.children %}
-            {% include 'menu_item.html' with items=item.children %}
+            {% if item.open or item.active %}
+                {% include 'menu_item.html' with items=item.children %}
+            {% endif %}
         {% endif %}
     </li>
 {% endfor %}
